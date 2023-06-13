@@ -1,9 +1,18 @@
 module.exports = function (options) {
     //Import the mock data json file
     const mockData = require('./MOCK_DATA.json');
-    //To DO: Add the patterns and their corresponding functions
+    // Add the patterns and their corresponding functions
+    this.add('role:productPrice,cmd:getProductPrice', productPrice);
 
+    // Describe the logic inside the function
+    function productPrice(msg, respond) {
+        const productId = msg.productId;
+        const product = mockData.find((item) => item.product_id === productId);
 
-    //To DO: add the pattern functions and describe the logic inside the function
-
+        if (product) {
+            respond(null, { result: product.product_price });
+        } else {
+            respond(null, { result: 'Product not found'});
+        }
+    }
 }
